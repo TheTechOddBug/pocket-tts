@@ -25,7 +25,6 @@ from pocket_tts.default_parameters import (
     DEFAULT_LANGUAGE,
     DEFAULT_LSD_DECODE_STEPS,
     DEFAULT_NOISE_CLAMP,
-    DEFAULT_TEMPERATURE,
     MAX_TOKEN_PER_CHUNK,
 )
 from pocket_tts.models.flow_lm import FlowLMModel
@@ -234,7 +233,7 @@ class TTSModel(nn.Module):
         cls,
         language: str | None = None,
         config: str | Path | None = None,
-        temp: float | int = DEFAULT_TEMPERATURE,
+        temp: float | int | None = None,
         lsd_decode_steps: int = DEFAULT_LSD_DECODE_STEPS,
         noise_clamp: float | int | None = DEFAULT_NOISE_CLAMP,
         eos_threshold: float = DEFAULT_EOS_THRESHOLD,
@@ -253,7 +252,9 @@ class TTSModel(nn.Module):
                 If neither `config` nor `language` is provided, defaults to `"english", which is the same model as 'english_2026-04'`.
             config: A path to a custom YAML config file saved locally (e.g., `"C://pocket_tts/pocket_tts_config.yaml"`).
             temp: Sampling temperature for generation. Higher values produce more
-                diverse but potentially lower quality output.
+                diverse but potentially lower quality output. If None, defaults to
+                the model's recommended value from its config file
+                (``default_temperature``, e.g. 0.3 for the English model).
             lsd_decode_steps: Number of steps for Lagrangian Self Distillation
                 decoding. More steps can improve quality but increase computation.
             noise_clamp: Maximum value for noise sampling. If None, no clamping
@@ -303,6 +304,8 @@ class TTSModel(nn.Module):
             raise ValueError("Config should be a path to a YAML file ending with .yaml")
         config_path = Path(config)
         config = load_config(config_path)
+        if temp is None:
+            temp = config.default_temperature
         logger.info(f"Loading model from config at {config_path}...")
 
         tts_model = TTSModel._from_pydantic_config_with_weights(
