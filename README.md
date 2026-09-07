@@ -312,6 +312,11 @@ uvx pocket-tts generate \
   --config hf://seastar105/pocket-tts-korean-300m/korean.yaml@df328c817a02866f20a6f74e5183e0a1fc6f6435 \
   --text "안녕하세요. 한국어 음성 합성 모델입니다."
 ```
+- [pocket-tts-farsi](https://huggingface.co/mehdi-hf/pocket-tts-farsi) by @mallahyari — Persian (Farsi), a 6-layer student distilled from a 24-layer teacher trained from scratch on 497h of CC0 speech:
+```bash
+uvx --with soundfile pocket-tts generate --config hf://mehdi-hf/pocket-tts-farsi/farsi.yaml@3c59d06b3177b21c5cd0df9e9e3e899f4d361c1c \
+    --voice hf://mehdi-hf/pocket-tts-farsi/example_voice.wav --text "سلام، حال شما چطور است؟"
+```
 
 Want your model here? Head to the [training Readme](https://github.com/kyutai-labs/pocket-tts/blob/main/training/README.md) to get started!
 
