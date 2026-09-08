@@ -318,6 +318,14 @@ uvx --with soundfile pocket-tts generate --config hf://mehdi-hf/pocket-tts-farsi
     --voice hf://mehdi-hf/pocket-tts-farsi/example_voice.wav --text "سلام، حال شما چطور است؟"
 ```
 
+- [Pocket TTS Indonesian](https://huggingface.co/anak10thn/pocket-tts-indonesian) by [@anak10thn](https://huggingface.co/anak10thn) (community research release), 6 layers:
+```bash
+uvx pocket-tts generate \
+  --config hf://anak10thn/pocket-tts-indonesian/indonesian_6l.yaml@635cde7a28301861b120f57ec4dda8525073017c \
+  --eos-threshold -5.0 \
+  --text "Selamat pagi. Ini model sintesis suara bahasa Indonesia."
+```
+
 Want your model here? Head to the [training Readme](https://github.com/kyutai-labs/pocket-tts/blob/main/training/README.md) to get started!
 
 ## Projects using Pocket TTS
